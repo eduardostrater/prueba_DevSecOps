@@ -3,15 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Proyecto Base DevSecOps</title>
+  <title>Gestor de Tareas</title>
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
   <main class="container">
-    <h1>Proyecto Base DevSecOps</h1>
-    <p id="mensaje">Cargando...</p>
+    <h1>Gestor de Tareas</h1>
+
+    <form id="form-tarea" class="form-tarea" novalidate>
+      <label for="titulo">Título</label>
+      <input id="titulo" name="titulo" type="text" maxlength="100" autocomplete="off">
+
+      <label for="descripcion">Descripción</label>
+      <textarea id="descripcion" name="descripcion" maxlength="500" rows="3"></textarea>
+
+      <p id="error" class="error" role="alert"></p>
+      <button type="submit">Agregar</button>
+    </form>
+
+    <ul id="lista-tareas" class="lista-tareas"></ul>
+    <p id="vacio" class="vacio">No tienes tareas registradas</p>
   </main>
 
+  <script src="js/tareas.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

@@ -15,9 +15,65 @@ body {
   max-width: 800px;
   margin: 4rem auto;
   padding: 0 1rem;
-  text-align: center;
 }
 
 h1 {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.form-tarea {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.form-tarea input,
+.form-tarea textarea {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font: inherit;
+}
+
+.form-tarea button {
+  align-self: flex-start;
+  padding: 0.5rem 1.25rem;
+  border: none;
+  border-radius: 4px;
+  background-color: #1f6feb;
+  color: #fff;
+  font: inherit;
+  cursor: pointer;
+}
+
+.error {
+  min-height: 1.5rem;
+  color: #c62828;
+}
+
+.lista-tareas {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.tarea {
+  padding: 0.75rem 1rem;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+}
+
+.estado {
+  margin-left: 0.5rem;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.vacio {
+  text-align: center;
+  color: #666;
 }
