@@ -1,0 +1,62 @@
+name: Análisis de dependencias
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    # Todos los lunes a las 08:00 UTC, para detectar vulnerabilidades nuevas aunque no haya cambios
+    - cron: '0 8 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  npm-audit:
+    name: Auditoría de npm
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      # npm ci falla si package-lock.json no coincide con package.json
+      - name: Instalar dependencias desde el lockfile
+        run: npm ci --ignore-scripts
+
+      - name: Buscar vulnerabilidades altas o críticas (criterio T6)
+        run: npm audit --audit-level=high
+
+      # npm audit signatures falla si no hay paquetes instalados, por eso se verifica antes
+      - name: Verificar firmas de los paquetes del registro
+        run: |
+          if [ -n "$(npm ls --all --parseable | tail -n +2)" ]; then
+            npm audit signatures
+          else
+            echo "El proyecto no tiene dependencias instaladas; no hay firmas que verificar."
+          fi
+
+  dependency-review:
+    name: Revisión de dependencias del PR
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v4
+
+      - name: Revisar dependencias nuevas o actualizadas
+        uses: actions/dependency-review-action@v4
+        with:
+          fail-on-severity: high
+          deny-licenses: GPL-3.0, AGPL-3.0
+          comment-summary-in-pr: on-failure
