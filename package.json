@@ -1,0 +1,17 @@
+{
+  "name": "devsecops",
+  "version": "1.0.0",
+  "description": "Proyecto base en JavaScript, HTML y CSS para pruebas DevOps",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Sin pruebas configuradas\" && exit 0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=20"
+  }
+}
