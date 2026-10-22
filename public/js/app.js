@@ -12,8 +12,19 @@ document.addEventListener('DOMContentLoaded', () => {
   function render() {
     lista.replaceChildren();
     tareas.forEach((tarea) => {
+      const completada = Tareas.normalizarEstado(tarea.estado) === 'completada';
+
       const item = document.createElement('li');
-      item.className = 'tarea';
+      item.className = completada ? 'tarea tarea--completada' : 'tarea';
+
+      const casilla = document.createElement('input');
+      casilla.type = 'checkbox';
+      casilla.checked = completada;
+      casilla.setAttribute('aria-label', 'Marcar como completada');
+      casilla.addEventListener('change', () => {
+        tareas = Tareas.alternarEstado(tareas, tarea.id);
+        render();
+      });
 
       const titulo = document.createElement('strong');
       titulo.textContent = tarea.titulo;
@@ -23,9 +34,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const estado = document.createElement('span');
       estado.className = 'estado';
-      estado.textContent = tarea.estado === 'pendiente' ? 'Pendiente' : 'Completada';
+      estado.textContent = completada ? 'Completada' : 'Pendiente';
 
-      item.append(titulo, estado, descripcion);
+      item.append(casilla, titulo, estado, descripcion);
       lista.appendChild(item);
     });
     vacio.hidden = tareas.length > 0;

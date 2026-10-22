@@ -67,6 +67,15 @@ h1 {
   border-radius: 4px;
 }
 
+.tarea input[type="checkbox"] {
+  margin-right: 0.5rem;
+}
+
+.tarea--completada strong {
+  text-decoration: line-through;
+  color: #888;
+}
+
 .estado {
   margin-left: 0.5rem;
   font-size: 0.85rem;

@@ -42,7 +42,30 @@
     return [tarea, ...lista];
   }
 
-  const api = { MAX_TITULO, MAX_DESCRIPCION, ESTADOS, limpiarTexto, crearTarea, agregarTarea };
+  // Normaliza el estado: cualquier valor fuera de la lista permitida es 'pendiente' (HU-04 S1)
+  function normalizarEstado(estado) {
+    return ESTADOS.includes(estado) ? estado : 'pendiente';
+  }
+
+  // Alterna pendiente/completada por ID, sin mutar la lista original (HU-04)
+  function alternarEstado(lista, id) {
+    return lista.map((tarea) => {
+      if (tarea.id !== id) return tarea;
+      const actual = normalizarEstado(tarea.estado);
+      return { ...tarea, estado: actual === 'pendiente' ? 'completada' : 'pendiente' };
+    });
+  }
+
+  const api = {
+    MAX_TITULO,
+    MAX_DESCRIPCION,
+    ESTADOS,
+    limpiarTexto,
+    crearTarea,
+    agregarTarea,
+    normalizarEstado,
+    alternarEstado
+  };
 
   if (typeof module !== 'undefined' && module.exports) {
     module.exports = api;
